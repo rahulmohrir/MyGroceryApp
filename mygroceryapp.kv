@@ -1,0 +1,1359 @@
+<RootWidget>:
+    
+## Labelbutton widget radius : dp(10),font_size : '12sp', padding : dp(16),  color : .545 , 0, .545, 1 ##DarkMagenta, 
+## Label display widget radius : dp(10), font_size : '10sp', padding : dp(4)
+## label for recycleview radius : dp(10), font_size : '8sp,
+
+
+
+## Label widget for add, edit, move button
+<MyLabel>:
+    canvas.before : 
+        Color:
+            rgba : 1,1,1,1
+        RoundedRectangle :
+            pos : self.pos
+            size : self.size
+            radius: [dp(10),]
+        Color : 
+            rgba : .372, .619, .627,1
+        Line :
+            width : dp(1)
+            rounded_rectangle : self.x, self.y, self.width, self.height, dp(10)
+
+    color : .545 , 0, .545, 1 ##DarkMagenta
+    font_size : '12sp'
+    padding : dp(16)
+## Label for name, price, quantity
+<MyDisplayLabel>:
+    canvas.before:
+        Color : 
+            rgba: .52, 0.80, .92, 1 ## Sky Blue
+        RoundedRectangle:
+            pos : self.pos
+            size : self.size
+            radius : [dp(10)]
+        Color : 
+            rgba: .52, 0.80, .92, 1 ## Sky Blue
+        Line :
+            width : dp(1)
+            rounded_rectangle : self.x, self.y, self.width, self.height, dp(10)
+
+    
+    ##font_size : self.height * 0.55
+    font_size : '10sp'
+    
+    color : 0,0,0,1
+   
+    valign : 'center'
+    halign : 'center'
+    text_size : self.size
+    padding : dp(4)
+## Label for recycleviewclass
+<MyRecycleLabel>:
+    
+    canvas.before:
+        Color : 
+            rgba: 1,1,1,1
+        RoundedRectangle:
+            pos : self.pos
+            size : self.size
+            radius : [dp(10)]
+    
+    font_size : '8sp'
+    color : .545 , 0, .545, 1 ##DarkMagenta
+    shorten : True
+    
+## BoxLayout for recycleviewclass label widgets    
+<BGLayoutForRV>:
+    padding : dp(4)
+    canvas.before :
+        Color :
+            rgba : 1,1,1,1
+        Rectangle :
+            pos : self.pos
+            size : self.size
+        Color:
+            rgba :  .372, .619, .627,1
+        Line:
+            width: dp(1)
+            rectangle: self.x, self.y, self.width, self.height
+## BoxLayout for the item name, quantity, price widget
+<BGLayoutForDisplay>:
+    padding : dp(4)
+    canvas.before :
+        Color :
+            rgba : 1,1,1,1
+        Rectangle :
+            pos : self.pos
+            size : self.size
+        Color:
+            rgba :  .372, .619, .627,1
+        Line:
+            width: dp(1)
+            rectangle: self.x, self.y, self.width, self.height
+        
+## Recycview class for the entries tab
+    
+<MyRecycleViewClass>:
+    index : root.index
+    selected_row : move_item_id
+    id : myrecycleviewclass_id
+   
+    text : ''
+    orientation : 'horizontal'
+    padding : dp(4)
+   
+    canvas.before:
+        Color:
+            rgba:  .94, .97, 1, 1 ## Alice Blue
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius : [dp(10)]
+        Color:
+            rgba :  .372, .619, .627,1
+        Line:
+            width: dp(1)
+            rounded_rectangle: self.x, self.y, self.width, self.height, dp(10)
+    
+    MyRecycleLabel:
+        id : name_label
+        text : root.item_name
+        ##color : 0,0,0,1
+        
+        size_hint_x : .3
+        ##size_hint_y : None
+        padding : [dp(4),dp(4),dp(4),dp(4)]
+        valign : 'center'
+        halign : 'left'
+        text_size : self.size
+    MyRecycleLabel:
+        id : quantity_label
+        text : root.quantity
+        ##color : 0,0,0,1
+        
+        size_hint_x : .2
+        ##size_hint_y : None
+        valign : 'center'
+        halign : 'center'
+        text_size : self.size
+        
+    MyRecycleLabel:
+        id : price_label
+        text : root.price
+        ##color : 0,0,0,1
+        
+        size_hint_x :.2
+        ##size_hint_y : None
+        valign : 'center'
+        halign : 'center'
+        text_size : self.size
+        
+    MyRecycleLabel:
+        id : move_item_id
+        
+        text : ' Move...'
+       
+        size_hint_x : .15
+        ##size_hint_y : None
+        valign : 'center'
+        halign : 'center'
+        text_size : self.size
+        shorten : False
+       
+        on_touch_down : if self.collide_point(*args[1].pos) : myrecycleviewclass_id.on_row_click(myrecycleviewclass_id.index)
+        on_touch_down : if self.collide_point(*args[1].pos) : app.root.open_move_item_popup(myrecycleviewclass_id.index)
+        canvas.before:
+            Color:
+                rgba:  1,1,1,1
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                radius : [dp(10),]
+            Color :
+                rgba : .372, .619, .627,1
+            Line :
+                width : dp(1)
+                rounded_rectangle : self.x, self.y, self.width, self.height, dp(10)
+
+            
+    MyRecycleLabel:
+        ##id : move_item_id
+        
+        text : 'Delete...'
+        ##color : .372, .619, .627,1
+        ##color : .647,.164,.164,1
+        color : 1,0,0,1
+       
+        size_hint_x : .15
+        ##size_hint_y : None
+        valign : 'center'
+        halign : 'center'
+        text_size : self.size
+        shorten : False
+       
+        
+        on_touch_down : if self.collide_point(*args[1].pos) : myrecycleviewclass_id.on_row_click(myrecycleviewclass_id.index)
+        
+        on_touch_down:   if self.collide_point(*args[1].pos): app.root.delete_item_main(myrecycleviewclass_id.index)
+        canvas.before:
+            Color:
+                rgba:  1,1,1,1
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                radius : [dp(10),]
+            Color :
+                rgba : .372, .619, .627,1
+            Line :
+                width : dp(1)
+                rounded_rectangle : self.x, self.y, self.width, self.height, dp(10)
+
+## recycleviewclass for the shoping list tab
+<MyRecycleViewClassForCurrent>:
+    index : root.index
+    selected_row : name_label
+    id : myrecycleviewclassforcurrent_id
+   
+    text : ''
+    orientation : 'horizontal'
+    padding : dp(10)
+    canvas.before:
+        Color:
+            rgba:  .94, .97, 1, 1 ## Alice Blue
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius : [dp(10)]
+        Color:
+            rgba :  .372, .619, .627,1
+        Line:
+            width: dp(1)
+            rounded_rectangle: self.x, self.y, self.width, self.height, dp(10)
+
+    MyRecycleLabel:
+        id : name_label
+        text : root.item_name
+        
+        size_hint_x : .4
+        ##size_hint_y : None
+        padding : [dp(4), dp(4), dp(4), dp(4)]
+        valign : 'center'
+        halign : 'left'
+        text_size : self.size
+    MyRecycleLabel:
+        id : quantity_label
+        text : root.quantity
+        
+        size_hint_x : .2
+       
+        ##size_hint_y : None
+        valign : 'center'
+        halign : 'center'
+        text_size : self.size
+        
+    MyRecycleLabel:
+        id : price_label
+        text : root.price
+       
+        
+        size_hint_x : .2
+        ##size_hint_y : None
+        valign : 'center'
+        halign : 'center'
+        text_size : self.size
+    MyRecycleLabel:
+        ##id : price_label
+        text : 'Delete...'
+        color : 1,0,0,1 ## Red
+        
+        size_hint_x : .2
+       
+        ##size_hint_y : None
+        valign : 'center'
+        halign : 'center'
+        text_size : self.size
+        on_touch_down:   if self.collide_point(*args[1].pos) and args[1] : app.root.delete_item_current(myrecycleviewclassforcurrent_id.index)
+        canvas.before:
+            Color:
+                rgba:  1, 1, 1, 1
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                radius : [dp(10),dp(10),dp(10),dp(10)]
+            Color:
+                rgba :  .372, .619, .627,1
+            Line:
+                width: dp(1)
+                rounded_rectangle: self.x, self.y, self.width, self.height, dp(10)
+
+## Recycleviewclass for both the display tabs
+<MyRecycleViewClassForDisplay>:
+    index : root.index
+    selected_row : name_label
+    id : myrecycleviewclassforcurrent_id
+   
+    text : ''
+    orientation : 'horizontal'
+    padding : dp(10)
+    canvas.before:
+        Color:
+            rgba:  .94, .97, 1, 1 ## Alice Blue
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius : [dp(10)]
+        Color:
+            rgba :  .372, .619, .627,1
+        Line:
+            width: dp(1)
+            rounded_rectangle: self.x, self.y, self.width, self.height, dp(10)
+
+    MyRecycleLabel:
+        id : name_label
+        text : root.item_name
+        
+        size_hint_x : .4
+       
+        ##size_hint_y : None
+        padding : [dp(16),dp(16), dp(16),dp(16)]
+        valign : 'center'
+        halign : 'left'
+        text_size : self.size
+    MyRecycleLabel:
+        id : quantity_label
+        text : root.quantity
+        
+        size_hint_x : .1
+        
+        ##size_hint_y : None
+        valign : 'center'
+        halign : 'center'
+        text_size : self.size
+        
+    MyRecycleLabel:
+        id : price_label
+        text : root.price
+       
+        size_hint_x : .1
+        
+        ##size_hint_y : None
+        valign : 'center'
+        halign : 'center'
+        text_size : self.size
+
+<MyRecycleView>:
+    
+## Layout for the recycleview class with selected row option                           
+<MySelectableRecycleBoxLayout>:
+    
+    default_size: None, dp(48)        # Width (None relies on size_hint), Height 48dp
+    default_size_hint: 1, None         # Fill horizontal space, rigid vertical space
+    size_hint_y: None
+    height: self.minimum_height        # Automatically recalculate total height
+    orientation: 'vertical'            # Stack the items vertically
+
+    
+    
+## The main screenmanger screen of rootwidget    
+<MainScreen>:
+    id : mainscreen_id
+    
+    BoxLayout: 
+        padding : [dp(0), dp(50),dp(0), dp(30) ]
+        canvas.before:
+            Color: 
+                rgba:1,1,1, 1 
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        
+        MyTabPanel:
+            do_default_tab : False
+            MyTabItem:
+                id : main_tab
+                text : 'Entries'
+                
+                
+                MyMainTabBoxLayout: 
+                    orientation : 'vertical'
+            
+                    size : (1,1)
+                
+                    BoxLayout:
+                        orientation : 'vertical'
+                        
+                        size_hint : (1,.9)
+                    
+                        
+                        BGLayoutForDisplay:
+                            orientation : 'horizontal'
+                        
+                            size_hint : (1,.05)
+                        
+                            MyDisplayLabel:
+                            
+                                text : 'Item Name'
+                            
+                                size_hint_x : .3
+                            
+                            MyDisplayLabel:
+                            
+                                text : 'Quantity'
+                            
+                                size_hint_x : .2                            
+                        
+                            MyDisplayLabel:
+                            
+                                text : 'Price'
+                            
+                                size_hint_x :.2
+                            
+                        
+                                
+                            MyDisplayLabel:
+                                text : 'Move / Edit...'
+                                
+                                size_hint_x : .3
+                            
+                
+                        BGLayoutForRV:
+                        
+                            size_hint : (1,.85)
+                        
+                            MyRecycleView:
+                                id : recycleview_1_id
+                                viewclass : 'MyRecycleViewClass'
+                                MySelectableRecycleBoxLayout : 
+            
+                    BoxLayout:
+                        
+                        size_hint : (1,.1)
+                    
+                    
+                        padding : [dp(100), dp(16), dp(100), dp(16)]
+                        canvas.before :
+                            Color :
+                                rgba : .372, .619, .627,1
+                            Rectangle :
+                                pos : self.pos
+                                size : self.size
+                            Color:
+                                rgba :  .372, .619, .627,1
+                            Line:
+                                width: dp(1)
+                                rectangle: self.x, self.y, self.width, self.height
+                        
+                        
+                        MyLabel :
+                            text : ' Add Item...'
+                            halign : 'center'
+                            ##color : .372, .619, .627,1
+                            color : .545 , 0, .545, 1 ##DarkMagenta
+
+                            on_touch_down:   if self.collide_point(*args[1].pos) and args[1] : app.root.open_add_item_popup()
+                            
+                            canvas.before : 
+                                Color:
+                                    rgba : 1,1,1,1
+                                RoundedRectangle :
+                                    pos : self.pos
+                                    size : self.size
+                                    radius: [dp(10),]
+        
+
+            MyTabItem:
+                text : 'Past'
+                MyMainTabBoxLayout: 
+                    orientation : 'vertical'
+                    size_hint : (1,1) 
+                    BGLayoutForDisplay:
+                        orientation : 'horizontal'
+                        
+                        size_hint : (1, .05)
+                        
+                        
+                        MyDisplayLabel:
+                            
+                            text : 'Item Name'
+                            
+                            size_hint_x : .4
+                            
+                    
+                        MyDisplayLabel:
+                            
+                            text : 'Quantity'
+                            
+                            size_hint_x : .1
+                            
+                    
+                        MyDisplayLabel:
+                            
+                            text : 'Price'
+                            
+                            size_hint_x : .1
+                    BGLayoutForRV : 
+                        
+                        MyRecycleView:
+                            id : recycleview_3_id
+                            viewclass : 'MyRecycleViewClassForDisplay'
+                            MySelectableRecycleBoxLayout :
+                                
+
+            MyTabItem:
+                text : 'Last One'
+                MyMainTabBoxLayout: 
+                    orientation : 'vertical'
+                    size_hint : (1,1) 
+                    BGLayoutForDisplay:
+                        orientation : 'horizontal'
+                        
+                        size_hint : (1, .05)
+                        
+                        
+                        MyDisplayLabel:
+                            
+                            text : 'Item Name'
+                            
+                            size_hint_x : .4
+                            
+                    
+                        MyDisplayLabel:
+                            
+                            text : 'Quantity'
+                            
+                            size_hint_x : .1
+                            
+                    
+                        MyDisplayLabel:
+                            
+                            text : 'Price'
+                            
+                            size_hint_x : .1
+                    BGLayoutForRV: 
+                        MyRecycleView:
+                            id : recycleview_4_id
+                            viewclass : 'MyRecycleViewClassForDisplay'
+                            MySelectableRecycleBoxLayout :
+            MyTabItem:
+                id : current_tab
+                text : 'Shoping List'
+                MyMainTabBoxLayout: 
+                    orientation : 'vertical'
+                    size_hint : (1,1)
+                    
+                    BoxLayout:
+                        orientation : 'vertical'
+                        
+                        size_hint : (1, .9)
+                        
+                        BGLayoutForDisplay:
+                            orientation : 'horizontal'
+                            
+                            size_hint : (1, .05)
+                            
+                            
+                            MyDisplayLabel:
+                                
+                                text : 'Item Name'
+                                size_hint_x : .4
+                            
+                            MyDisplayLabel:
+                                
+                                text : 'Quantity'
+                                size_hint_x : .2
+                            
+                        
+                            MyDisplayLabel:
+                                
+                                text : 'Price'
+                                size_hint_x : .2
+                            MyDisplayLabel :
+                                text : ''
+                                size_hint_x : .2
+                                
+                            
+                        
+                        BGLayoutForRV:
+                            size_hint : (1,.85)
+                            MyRecycleView:
+                                id : recycleview_2_id
+                                viewclass : 'MyRecycleViewClassForCurrent'
+                                MySelectableRecycleBoxLayout :
+                            
+                            
+
+                    BoxLayout:
+                        size_hint : (1, .1)
+                        padding : [dp(16), dp(16), dp(16), dp(16)]
+                        canvas.before : 
+                            Color:
+                                rgba :  .372, .619, .627,1
+                            Rectangle :
+                                pos : self.pos
+                                size : self.size
+                    
+                            Color:
+                                rgba :  .372, .619, .627,1
+                            Line:
+                                width: dp(1)
+                                rounded_rectangle: self.x, self.y, self.width, self.height, 0,0,15,15
+                        
+                        
+                        MyLabel :
+                            text : 'Add Item...'
+                            halign : 'center'
+                            valign : 'center'
+                            
+                            on_touch_down:   if self.collide_point(*args[1].pos) and args[1] : app.root.open_add_item_popup_currenttab()
+                        
+                        MyLabel :
+                            text : 'Clear list...'
+                            
+                            halign : 'center'
+                            valign : 'center'
+                            on_touch_down:   if self.collide_point(*args[1].pos) and args[1] : app.root.clear_list()
+
+<MyTabPanel>:
+    backgound_image : ''
+    background_normal : ''
+    background_color : 1,1,1,1
+    border: [dp(1),dp(1),dp(1),dp(1)]
+    strip_border : [dp(16),dp(16),dp(16),dp(16)]
+    canvas.before :
+        Color :
+            rgba : .372, .619, .627,1
+        Line :
+            width : dp(4)
+            rectangle : self.x, self.y, self.width, self.height
+
+    tab_width : self.width / len(self.tab_list) if self.tab_list else dp(100)
+    
+
+
+<MyTabItem>:
+    background_normal: ''
+    background_down: ''
+    
+    background_color :  (.52, 0.80, .92, 1) if self.state == 'down' else  (.372, .619, .627,1)
+    ##color : 0,.5,.5,1
+    color : 0,0,0,1
+    font_size : '10sp'
+    ##color : .545 , 0, .545, 1 ##DarkMagenta
+    
+    canvas.after : 
+        Color :
+            rgba : (.372, .619, .627,1)
+        Line :
+            width : dp(4)
+            rectangle : self.x, self.y, self.width, self.height
+    
+    border : [dp(1),dp(1),dp(1),dp(1)]
+   
+
+<MyMainTabBoxLayout>: 
+
+## Custom boxlayout for the textinput widget to hold
+<MyTextInputLayout>:
+    canvas.before:
+        
+        Color:
+            rgba : 0,0,0,0
+        Rectangle :
+            pos : self.pos
+            size : self.size
+    padding : dp(16)   
+    
+## Rule For the textinput widget on the add item popup
+<MyTextInput>:
+
+    background_normal: ''
+    background_active: ''
+    background_color: 0, 0, 0, 0  # Clear default background color
+    cursor_color: 0.1, 0.1, 0.1, 1
+    foreground_color: 0.2, 0.2, 0.2, 1
+    padding: [dp(12), dp(8),dp(8),dp(8)]
+    font_size : '10sp'
+    
+    
+    canvas.before:
+        Color:
+            rgba: (0.9, 0.9, 0.9, 1) if not self.focus else (0.8, 0.8, 1, 1)  # Change color on focus
+            
+
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(20),]  # Adjust corner roundness here
+        Color:
+            rgba: self.disabled_foreground_color if self.disabled else (self.hint_text_color if not self.text else self.foreground_color)
+        Color :
+            rgba : .372, .619, .627,1
+            
+
+        Line :
+            width : dp(1)
+            rounded_rectangle : self.x, self.y, self.width, self.height, dp(20)
+
+## Rule for the label widget on the add item popup
+<MyLabelForAddPopup>:
+    canvas.before:
+        Color : 
+            rgba: 1,1,1,1
+        RoundedRectangle:
+            pos : self.pos
+            size : self.size
+            radius : [dp(10), dp(10),dp(10),dp(10)]
+        Color :
+            rgba : .372, .619, .627,1
+        Line :
+            width : dp(1)
+            rounded_rectangle : self.x, self.y, self.width, self.height, dp(10)
+    color : .372, .619, .627,1
+    text_size : self.size
+    valign : 'center'
+    halign : 'center'
+## Rule for the add item popup
+<MyAddItemPopup>:
+    
+    id : add_item_popup_id
+    ##size_hint : ( .6, .35)
+    size_hint : None, None
+    size : (dp(300), dp(200))
+    ##pos_hint : {'x': 0.3, 'y': 0.5}
+   
+    title: ""
+    separator_height: dp(0)
+    title_size : dp(0)
+    
+    
+    background: ""
+    background_color:0,0,0,0
+      
+    content: 
+    BoxLayout:
+        orientation : 'vertical'
+        ##size_hint : (1,1)
+        size_hint : None, None
+        size : (dp(400), dp(200))
+        
+        BoxLayout:
+            ##size_hint : (1,.2)
+            size_hint : None, None
+            size : (dp(300), dp(50))
+            
+            canvas.before :
+                Color :
+                    rgba : .372, .619, .627,1
+                RoundedRectangle :
+                    size : self.size
+                    pos : self.pos
+                    radius : [dp(20),dp(20),dp(0),dp(0)]
+                Color :
+                    rgba :  .372, .619, .627,1
+                Line :
+                    width : dp(1)
+                    rounded_rectangle : self.x, self.y, self.width, self.height,dp(20),dp(20),dp(0),dp(0)
+            Label :
+                text : 'Add Item...'
+                text_size : self.size
+                font_size : '14sp'
+                halign : 'left'
+                padding : dp(16)
+                valign : 'center'
+        BoxLayout : 
+            orientation : 'vertical'
+            ##size_hint : (1,.6)
+            size_hint : None, None
+            size : (dp(300), dp(100))
+            padding : dp(4)
+            canvas.before : 
+                Color : 
+                    rgba :1,1,1,1
+                Rectangle : 
+                    size : self.size
+                    pos : self.pos
+                Color :
+                    rgba : .372, .619, .627,1
+                Line :
+                    rectangle : self.x, self.y, self.width, self.height
+
+            MyTextInput:
+                id : item_name_id
+                hint_text : 'Item Name'
+              
+                multiline : False
+            
+                focus : True
+                cursor_color : 1,0,0,1
+                cursor_blink : True
+            
+        
+            MyTextInput :
+                id : quantity_id
+                hint_text : 'Quantity'
+                multiline : False
+             
+            MyTextInput :
+                id : price_id
+                hint_text : 'Price'
+                multiline : False
+                    
+               
+        BoxLayout : 
+            orientation : 'horizontal'
+            ##size_hint : (1,.2)
+            size_hint : None, None
+            size : (dp(300), dp(50))
+            padding : [dp(8), dp(8),dp(8), dp(4)]
+            canvas.before :
+                Color :
+                    rgba : .372, .619, .627,1
+                RoundedRectangle :
+                    size : self.size
+                    pos : self.pos
+                    radius : [dp(0),dp(0),dp(20),dp(20)]
+                Color :
+                    rgba : .372, .619, .627,1
+                Line :
+                    width : dp(1)
+                    rounded_rectangle : self.x, self.y, self.width, self.height,dp(0),dp(0),dp(20),dp(20)
+            
+            MyLabelForAddPopup : 
+             
+                text : 'Add Item...'
+                font_size : '14sp'
+                color : .545 , 0, .545, 1 ##DarkMagenta
+                ## Call the function to add item to the main tab
+                on_touch_down:   if self.collide_point(*args[1].pos): app.root.get_list_main()
+            MyLabelForAddPopup :
+                
+                text : 'Cancel!'
+                font_size : '14sp'
+                color : .545 , 0, .545, 1 ##DarkMagenta
+
+                ## Call function to cancel add item popup
+                on_touch_down:   if self.collide_point(*args[1].pos):app.root.cancel_add_item_popup()
+
+
+## Rule for the add item popup for the current tab
+<MyAddItemPopupForCurrentTab>:
+    
+    id : add_item_popup_current
+    
+    ##size_hint :( .6, .35)
+    size_hint : None, None
+    size : (dp(300), dp(200))
+    title: ""
+    separator_height: dp(0)
+    title_size : dp(0)
+    
+    background: ""
+    background_color:0,0,0,0
+    
+    content: 
+    BoxLayout:
+        orientation : 'vertical'
+        size_hint : (1,1)
+        BoxLayout:
+            ##size_hint : (1,.2)
+            size_hint : None, None
+            size : (dp(300), dp(50))
+            canvas.before :
+                Color :
+                    rgba : .372, .619, .627,1
+                RoundedRectangle :
+                    size : self.size
+                    pos : self.pos
+                    radius : [dp(20),dp(20),dp(0),dp(0)]
+                Color :
+                    rgba :  .372, .619, .627,1
+                Line :
+                    width : dp(1)
+                    rounded_rectangle : self.x, self.y, self.width, self.height,dp(20),dp(20),dp(0),dp(0)
+            Label :
+                text : 'Add Item...'
+                text_size : self.size
+                font_size : '14sp'
+                halign : 'left'
+                padding : dp(16)
+                valign : 'center'
+
+        BoxLayout : 
+            orientation : 'vertical'
+            ##size_hint : (1,.6)
+            size_hint : None, None
+            size : (dp(300), dp(100))
+            padding : dp(4)
+            canvas.before : 
+                Color : 
+                    rgba :1,1,1,1
+                Rectangle : 
+                    size : self.size
+                    pos : self.pos
+                Color :
+                    rgba : .372, .619, .627,1
+                Line :
+                    rectangle : self.x, self.y, self.width, self.height
+
+            MyTextInput:
+                id : item_name_current
+                hint_text : 'Item Name'
+                multiline : False
+            MyTextInput :
+                id : quantity_current
+                hint_text : 'Quantity'
+                multiline : False
+            MyTextInput :
+                id : price_current
+                hint_text : 'Price'
+                multiline : False
+        BoxLayout : 
+            orientation : 'horizontal'
+            ##size_hint : (1,.2)
+            size_hint : None, None
+            size : (dp(300), dp(50))
+            padding :[dp(8), dp(8),dp(8), dp(4)]
+            canvas.before :
+                Color :
+                    rgba : .372, .619, .627,1
+                RoundedRectangle :
+                    size : self.size
+                    pos : self.pos
+                    radius : [dp(0),dp(0),dp(20),dp(20)]
+                Color :
+                    rgba : .372, .619, .627,1
+                Line :
+                    width : dp(1)
+                    rounded_rectangle : self.x, self.y, self.width, self.height,dp(0),dp(0),dp(20),dp(20)
+            MyLabelForAddPopup :
+                text : 'Add Item...'
+                text_size : self.size
+                font_size : '14sp'
+                color : .545 , 0, .545, 1 ##DarkMagenta
+                valign : 'center'
+                halign : 'center'
+                on_touch_down:   if self.collide_point(*args[1].pos): app.root.get_list_currenttab()
+            MyLabelForAddPopup :
+                text : 'Cancel!'
+                text_size : self.size
+                font_size : '14sp'
+                color : .545 , 0, .545, 1 ##DarkMagenta
+                valign : 'center'
+                halign : 'center'
+                on_touch_down:   if self.collide_point(*args[1].pos):app.root.cancel_add_item_popup_currenttab()        
+
+## Rule for popup which moves the item to current list with option move and cancel
+<MyMoveItemPopup>:
+    index : root.index
+    id : move_item_popup_id
+    
+    ##size_hint :( .7, .35)
+    size_hint : None, None
+    size : (dp(300), dp(200))
+    
+    title: ""
+    separator_height: dp(0)
+    title_size :dp(0)
+    background: ""
+    background_color:0,0,0,0
+    
+    content: 
+    BoxLayout:
+        orientation : 'vertical'
+        size_hint : (1,1)
+        BoxLayout:
+            ##size_hint : (1,.2)
+            size_hint : None, None
+            size : (dp(300), dp(50))
+            canvas.before :
+                Color :
+                    rgba : .372, .619, .627,1
+                RoundedRectangle :
+                    size : self.size
+                    pos : self.pos
+                    radius : [dp(20),dp(20),dp(0),dp(0)]
+                Color :
+                    rgba :  .372, .619, .627,1
+                Line :
+                    width : dp(1)
+                    rounded_rectangle : self.x, self.y, self.width, self.height,dp(20),dp(20),dp(0),dp(0)
+            Label :
+                text : 'Move Item -> Shoping List...'
+                text_size : self.size
+                font_size : '14sp'
+                halign : 'left'
+                padding : dp(16)
+                valign : 'center'
+                
+
+        BoxLayout : 
+            orientation : 'vertical'
+            ##size_hint : (1,.6)
+            size_hint : None, None
+            size : (dp(300), dp(100))
+            padding : dp(4)
+            canvas.before : 
+                Color : 
+                    rgba :1,1,1,1
+                Rectangle : 
+                    size : self.size
+                    pos : self.pos
+                Color :
+                    rgba : .372, .619, .627,1
+                Line :
+                    rectangle : self.x, self.y, self.width, self.height
+            MyTextInput:
+                id : get_name_id
+                text : ""
+            MyTextInput :
+                id : get_quantity_id
+                text : ''
+                
+            MyTextInput :
+                id : get_price_id
+                text : ''
+                
+        BoxLayout : 
+            orientation : 'horizontal'
+            ##size_hint : (1,.2)
+            size_hint : None, None
+            size : (dp(300), dp(50))
+            padding : [dp(16),dp(8),dp(16),dp(4)]
+            canvas.before :
+                Color :
+                    rgba : .372, .619, .627,1
+                RoundedRectangle :
+                    size : self.size
+                    pos : self.pos
+                    radius : [dp(0),dp(0),dp(20),dp(20)]
+                Color :
+                    rgba : .372, .619, .627,1
+                Line :
+                    width : dp(1)
+                    rounded_rectangle : self.x, self.y, self.width, self.height,dp(0),dp(0),dp(20),dp(20)
+            
+           
+                
+
+            MyLabelForAddPopup :
+                text : 'Move...'
+                text_size : self.size
+                font_size : '14sp'
+                color : .545 , 0, .545, 1 ##DarkMagenta
+                valign : 'center'
+                halign : 'center'
+                on_touch_down:   if self.collide_point(*args[1].pos): app.root.move_item()
+            
+            MyLabelForAddPopup :
+                text : 'Cancel!'
+                text_size : self.size
+                font_size : '14sp'
+                color : .545 , 0, .545, 1 ##DarkMagenta
+                valign : 'center'
+                halign : 'center'
+                on_touch_down:   if self.collide_point(*args[1].pos):app.root.cancel_move_item_popup()
+        
+
+
+## Popup informing that you can not add more items to the list   
+<MyLimitItemPopup>:
+    index : root.index
+    
+    
+    ##size_hint :( .8, .2)
+    size_hint : None, None
+    size : (dp(300), dp(125))
+    title: ""
+    separator_height: dp(0)
+    title_size : dp(0)
+    
+    background: ""
+    background_color:0,0,0,0
+    
+    content: 
+    BoxLayout:
+        orientation : 'vertical'
+        canvas.before :
+            Color :
+                rgba : .372, .619, .627,1
+            RoundedRectangle :
+                size : self.size
+                pos : self.pos
+                radius : [dp(20),dp(20),dp(20),dp(20)]
+            Color :
+                rgba : .372, .619, .627,1
+            Line :
+                width : dp(1)
+                rounded_rectangle : self.x, self.y, self.width, self.height,dp(20),dp(20),dp(20),dp(20)
+        Label :
+            text : 'Limit reached ! You can not add more items to the list.'
+            text_size : self.size
+            valign : 'center'
+            halign : 'center'
+## Info popup informing the item exists in the entries or the current list
+<MyItemExitPopup>:
+    
+    
+    
+    ##size_hint :( .8, .2)
+    size_hint : None, None
+    size : (dp(300), dp(125))
+    title: ""
+    separator_height: dp(0)
+    title_size :dp(0)
+    
+    background: ""
+    background_color:0,0,0,0
+    auto_dismiss : True
+    
+    content: 
+    BoxLayout:
+        orientation : 'vertical'
+        canvas.before :
+            Color :
+                rgba : .372, .619, .627,1
+            RoundedRectangle :
+                size : self.size
+                pos : self.pos
+                radius : [dp(20),dp(20),dp(20),dp(20)]
+            Color :
+                rgba :  .372, .619, .627,1
+            Line :
+                width : dp(1)
+                rounded_rectangle : self.x, self.y, self.width, self.height,dp(20),dp(20),dp(20),dp(20)
+        Label :
+            text : 'The item you are trying to add already exits in the list.'
+            text_size : self.size
+            font_size : '12sp'
+            valign : 'center'
+            halign : 'center'
+## Rule for popup  clearing the the current list and moving list to one place back 
+
+<MyClearListPopup>:
+    
+    id : clear_list_id
+    
+    ##size_hint :( .8, .2)
+    size_hint : None, None
+    size : (dp(300), dp(150))
+    title: ""
+    separator_height: dp(0)
+    title_size : dp(0)
+    
+    background: ""
+    background_color:0,0,0,0
+    
+    content: 
+    BoxLayout:
+        orientation : 'vertical'
+        ##size_hint : (1,1)
+        
+
+        BoxLayout : 
+            orientation : 'vertical'
+            ##size_hint : (1,.6)
+            size_hint : None, None
+            size : (dp(300), dp(50))
+            
+            canvas.before :
+                Color :
+                    rgba : .372, .619, .627,1
+                RoundedRectangle :
+                    size : self.size
+                    pos : self.pos
+                    radius : [dp(20),dp(20),dp(0),dp(0)]
+                Color :
+                    rgba :.372, .619, .627,1
+                Line :
+                    width : dp(1)
+                    rounded_rectangle : self.x, self.y, self.width, self.height ,dp(20),dp(20),dp(0),dp(0)
+
+            Label :
+                text : 'This will clear the current list! Move the lists one place back.'
+                valign : 'center'
+                halign : 'left'
+                color : 1,1,1,1
+               
+                padding : dp(16)
+                ##shorten : True
+                text_size: self.width, None
+                font_size : '12sp'
+        BoxLayout : 
+            orientation : 'horizontal'
+            ##size_hint : (1,.4)
+            size_hint : None, None
+            size : (dp(300), dp(50))
+            padding : [dp(32),dp(8),dp(32),dp(8)]
+            canvas.before :
+                Color :
+                    rgba : .372, .619, .627,1
+                RoundedRectangle :
+                    size : self.size
+                    pos : self.pos
+                    radius : [dp(0),dp(0),dp(20),dp(20)]
+                Color :
+                    rgba :.372, .619, .627,1
+                Line :
+                    width : dp(1)
+                    rounded_rectangle : self.x, self.y, self.width, self.height ,dp(0),dp(0),dp(20),dp(20)
+            
+            MyLabel :
+                text : 'Ok...'
+                text_size : self.size
+                font_size : '14sp'
+                valign : 'center'
+                halign : 'center'
+                on_touch_down:   if self.collide_point(*args[1].pos): app.root.select_all_items()
+            MyLabel :
+                text : 'Cancel!'
+                text_size : self.size
+                font_size : '14sp'
+                valign : 'center'
+                halign : 'center'
+                on_touch_down:   if self.collide_point(*args[1].pos):app.root.cancel_clear_list_popup()        
+## Info popup informing the item exists in the last list
+<MyItemExitsPreviousPopup>:
+    ##size_hint :( .8, .2)
+    size_hint : None, None
+    size : (dp(300), dp(150))
+    title: ""
+    separator_height:dp(0)
+    title_size : dp(0)
+    background: ""
+    background_color:0,0,0,0
+    auto_dismiss : True
+    
+    content: 
+    BoxLayout:
+        orientation : 'vertical'
+        canvas.before :
+            Color :
+                rgba : .372, .619, .627,1
+            RoundedRectangle :
+                size : self.size
+                pos : self.pos
+                radius : [dp(20),dp(20),dp(20),dp(20)]
+            Color :
+                rgba :  .372, .619, .627,1
+            Line :
+                width : dp(1)
+                rounded_rectangle : self.x, self.y, self.width, self.height,dp(20),dp(20),dp(20),dp(20)
+
+        Label :
+            text : 'The item you are trying to add is in the last list.'
+            text_size : self.size
+            font_size : '12sp'
+            valign : 'center'
+            halign : 'center'
+            color : 1,1,1,1
+
+## Info popup informing the item exists in the last list
+<MyItemExitsOnebeforePopup>:
+    
+    
+    
+    ##size_hint :( .8, .2)
+    size_hint : None, None
+    size : (dp(300), dp(150))
+    title: ""
+    separator_height: dp(0)
+    title_size : dp(0)
+    background: ""
+    background_color:0,0,0,0
+    auto_dismiss : True
+    
+    content: 
+    BoxLayout:
+        orientation : 'vertical'
+        canvas.before :
+            Color :
+                rgba : .372, .619, .627,1
+            RoundedRectangle :
+                size : self.size
+                pos : self.pos
+                radius : [dp(20),dp(20),dp(20),dp(20)]
+            Color :
+                rgba :  .372, .619, .627,1
+            Line :
+                width : dp(1)
+                rounded_rectangle : self.x, self.y, self.width, self.height,dp(20),dp(20),dp(20),dp(20)
+        Label :
+            text : 'The item you are trying to add is in the last one list.'
+            text_size : self.size
+            font_size :'12sp'
+            valign : 'center'
+            halign : 'center'
+            color : 1,1,1,1
+
+## Rule for info popup informing the item is moved to current list
+<MyItemMovedToCurrentPopup>:
+    ##size_hint :( .8, .2)
+    size_hint : None, None
+    size : (dp(300), dp(150))
+    title: ""
+    separator_height: dp(0)
+    title_size : dp(0)
+    
+    background: ""
+    background_color:0,0,0,0
+    auto_dismiss : True
+    
+    content: 
+    BoxLayout:
+        orientation : 'vertical'
+        canvas.before :
+            Color :
+                rgba : .372, .619, .627,1
+            RoundedRectangle :
+                size : self.size
+                pos : self.pos
+                radius : [dp(20),dp(20),dp(20),dp(20)]
+            Color :
+                rgba :  .372, .619, .627,1
+            Line :
+                width : dp(1)
+                rounded_rectangle : self.x, self.y, self.width, self.height,dp(20),dp(20),dp(20),dp(20)
+        Label :
+            text : 'The item successfully moved to the shoping list.'
+            text_size : self.size
+            font_size : '12sp'
+            valign : 'center'
+            halign : 'center'
+
+<MyItemExitsBothPopup>:
+    
+    
+   
+    ##size_hint :( .8, .2)
+    size_hint : None, None
+    size : (dp(300), dp(150))
+    title: ""
+    separator_height: dp(0)
+    title_size : dp(0)
+    background: ""
+    background_color:0,0,0,0
+    auto_dismiss : True
+    
+    content: 
+    BoxLayout:
+        orientation : 'vertical'
+        canvas.before :
+            Color :
+                rgba : .372, .619, .627,1
+            RoundedRectangle :
+                size : self.size
+                pos : self.pos
+                radius : [dp(20),dp(20),dp(20),dp(20)]
+            Color :
+                rgba :  .372, .619, .627,1
+            Line :
+                width : dp(1)
+                rounded_rectangle : self.x, self.y, self.width, self.height,dp(20),dp(20),dp(20),dp(20)
+        Label :
+            text : 'The item you are trying to add is in the last as well as one before list.'
+            text_size : self.size
+            font_size : '12sp'
+            valign : 'center'
+            halign : 'center'
